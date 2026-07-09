@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Открытка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .password-screen {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            transition: 0.5s;
+        }
+        .password-screen h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #ffd700;
+            letter-spacing: 2px;
+        }
+        .password-screen p {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        .password-screen input {
+            width: 80%;
+            padding: 14px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 40px;
+            background: #16213e;
+            color: #fff;
+            text-align: center;
+            outline: 2px solid #ffd700;
+            transition: 0.3s;
+        }
+        .password-screen input:focus {
+            outline: 3px solid #ffd700;
+            background: #0f3460;
+        }
+        .password-screen button {
+            margin-top: 20px;
+            padding: 14px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 40px;
+            background: #ffd700;
+            color: #1a1a2e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .password-screen button:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 16px;
+            min-height: 24px;
+        }
+        .card {
+            display: none;
+            background: linear-gradient(145deg, #2d2d44, #1a1a2e);
+            padding: 30px 25px;
+            border-radius: 24px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+            animation: fadeIn 0.8s ease;
+        }
+        .card h2 {
+            font-size: 36px;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        .card .emoji-big {
+            font-size: 80px;
+            display: block;
+            margin: 20px 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .back-link {
+            display: none;
+            margin-top: 20px;
+            color: #aaa;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .back-link:hover {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Экран ввода кода -->
+        <div id="passwordScreen" class="password-screen">
+            <h1>Введи секретный код</h1>
+            <p>Чтобы увидеть послание</p>
+            <input type="text" id="codeInput" placeholder="Введи код...">
+            <br>
+            <button onclick="checkCode()">Открыть</button>
+            <div class="error-message" id="errorMsg"></div>
+        </div>
+
+        <!-- Открытка -->
+        <div id="cardContainer" class="card">
+            <h2>С днём рождения!</h2>
+            <span class="emoji-big">🎉💐🎂</span>
+            <div class="back-link" onclick="resetCard()">🔙 Вернуться к коду</div>
+        </div>
+    </div>
+
+    <script>
+        const SECRET_CODE = "12.07.2026";
+
+        function checkCode() {
+            const input = document.getElementById('codeInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (input === SECRET_CODE) {
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('cardContainer').style.display = 'block';
+                errorMsg.textContent = '';
+            } else {
+                errorMsg.textContent = 'Неверный код. Попробуй ещё раз.';
+                document.getElementById('codeInput').value = '';
+                document.getElementById('codeInput').focus();
+            }
+        }
+
+        function resetCard() {
+            document.getElementById('passwordScreen').style.display = 'block';
+            document.getElementById('cardContainer').style.display = 'none';
+            document.getElementById('codeInput').value = '';
+            document.getElementById('errorMsg').textContent = '';
+        }
+
+        document.getElementById('codeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkCode();
+            }
+        });
+    </script>
+</body>
+</html>
