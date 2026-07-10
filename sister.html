@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Открытка для сестры</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffe6ec;
+            animation: gradientBG 12s ease infinite alternate;
+            background-size: 400% 400%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background: #ffe6ec; }
+            25% { background: #ffd9e5; }
+            50% { background: #ffccdd; }
+            75% { background: #ffd9e5; }
+            100% { background: #ffe6ec; }
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 40px 30px;
+            border-radius: 32px;
+            border: 2px solid rgba(255, 192, 203, 0.5);
+            box-shadow: 0 20px 60px rgba(255, 192, 203, 0.2);
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #e75480;
+            margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .equation {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e75480;
+            background: rgba(255, 192, 203, 0.15);
+            padding: 20px 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            display: inline-block;
+            border: 1px solid #ffb6c1;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 14px 20px;
+            font-size: 18px;
+            border: 2px solid #ffb6c1;
+            border-radius: 40px;
+            background: #fff;
+            color: #333;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #e75480;
+            box-shadow: 0 0 0 4px rgba(255, 182, 193, 0.4);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 14px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 40px;
+            background: #ffb6c1;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e75480;
+            transform: scale(1.05);
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 16px;
+            min-height: 24px;
+        }
+
+        .image-container {
+            margin: 25px 0;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 20px;
+            border: 2px solid #ffb6c1;
+            box-shadow: 0 10px 40px rgba(255, 182, 193, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .final-message {
+            font-size: 24px;
+            color: #e75480;
+            margin-top: 20px;
+            border-top: 2px solid #ffb6c1;
+            padding-top: 20px;
+        }
+
+        /* Адаптив под телефон */
+        @media (max-width: 480px) {
+            .step {
+                padding: 25px 15px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .equation {
+                font-size: 20px;
+                padding: 15px;
+            }
+
+            input[type="text"] {
+                width: 95%;
+                font-size: 16px;
+                padding: 12px 15px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px 25px;
+            }
+
+            .final-message {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="step" id="mainStep">
+            <h2>Открытка для сестры</h2>
+            <div class="equation">
+                (25 × 2) + 15 - 3 + (5 × 1) = ?
+            </div>
+            <div class="input-group">
+                <input type="text" id="answerInput" placeholder="Введи число" />
+                <br />
+                <button onclick="checkAnswer()">Проверить</button>
+                <div class="error-msg" id="errorMsg"></div>
+            </div>
+            <div id="memeContainer" class="hidden image-container">
+                <img src="images/meme67.jpg" alt="Мем с числом 67" />
+                <div class="final-message">
+                    🎉 67!<br />
+                    Ты решила!<br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const input = document.getElementById('answerInput').value.trim();
+            const error = document.getElementById('errorMsg');
+
+            if (input === '67') {
+                document.getElementById('memeContainer').classList.remove('hidden');
+                error.textContent = '';
+                document.getElementById('answerInput').disabled = true;
+                // можно скрыть кнопку после ответа, чтобы не мешала
+                document.querySelector('button').style.display = 'none';
+            } else {
+                error.textContent = '❌ Неверно, попробуй ещё раз.';
+                document.getElementById('answerInput').value = '';
+                document.getElementById('answerInput').focus();
+            }
+        }
+
+        // Enter для проверки
+        document.getElementById('answerInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+    </script>
+</body>
+</html>
