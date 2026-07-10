@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Открытка для папы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0b1a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .step {
+            display: none;
+            background: rgba(20, 20, 40, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 40px 30px;
+            border-radius: 32px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.15);
+            animation: fadeIn 0.7s ease;
+            text-align: center;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #ffd700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .equation {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffd700;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 14px 20px;
+            font-size: 18px;
+            border: 2px solid #ffd700;
+            border-radius: 40px;
+            background: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ffed4a;
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 40px;
+            background: #ffd700;
+            color: #0b0b1a;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+
+        .next-btn {
+            background: transparent;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            font-size: 20px;
+            padding: 10px 30px;
+            border-radius: 50px;
+            margin-top: 25px;
+        }
+
+        .next-btn:hover {
+            background: #ffd700;
+            color: #0b0b1a;
+        }
+
+        .image-container {
+            margin: 25px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 20px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-size: 16px;
+            min-height: 24px;
+        }
+
+        .final-text {
+            font-size: 22px;
+            color: #ffd700;
+            margin: 20px 0;
+        }
+
+        .final-message {
+            font-size: 26px;
+            color: #fff;
+            margin-top: 20px;
+            border-top: 2px solid #ffd700;
+            padding-top: 20px;
+        }
+
+        .quote-hint {
+            font-size: 20px;
+            color: #aaa;
+            margin: 15px 0 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ШАГ 1 -->
+        <div id="step1" class="step active">
+            <h2>Шаг 1 из 3</h2>
+            <div class="equation">(√100 + 7) × (∛8 - 1) = ?</div>
+            <div class="input-group">
+                <input type="text" id="ans1" placeholder="Введи число" />
+                <br />
+                <button onclick="checkStep1()">Проверить</button>
+                <div class="error-msg" id="err1"></div>
+            </div>
+            <div id="terminatorPhrase" class="hidden" style="margin-top:20px;">
+                <p class="quote-hint">Терминатор однажды сказал...</p>
+                <input type="text" id="phrase1" placeholder="Введи фразу" />
+                <br />
+                <button onclick="checkPhrase1()">Проверить</button>
+                <div class="error-msg" id="err1p"></div>
+            </div>
+            <div id="terminatorImg" class="hidden image-container">
+                <img src="images/terminator.jpg" alt="Терминатор" />
+                <br />
+                <button class="next-btn" onclick="goToStep2()">Далее</button>
+            </div>
+        </div>
+
+        <!-- ШАГ 2 -->
+        <div id="step2" class="step">
+            <h2>Шаг 2 из 3</h2>
+            <div class="equation">(√64 - 4) × (∛27 - 2) = ?</div>
+            <div class="input-group">
+                <input type="text" id="ans2" placeholder="Введи число" />
+                <br />
+                <button onclick="checkStep2()">Проверить</button>
+                <div class="error-msg" id="err2"></div>
+            </div>
+            <div id="vaderPhrase" class="hidden" style="margin-top:20px;">
+                <p class="quote-hint">Дарт Вейдер сказал Люку...</p>
+                <input type="text" id="phrase2" placeholder="Введи фразу" />
+                <br />
+                <button onclick="checkPhrase2()">Проверить</button>
+                <div class="error-msg" id="err2p"></div>
+            </div>
+            <div id="vaderImg" class="hidden image-container">
+                <img src="images/vader.jpg" alt="Дарт Вейдер" />
+                <br />
+                <button class="next-btn" onclick="goToStep3()">Далее</button>
+            </div>
+        </div>
+
+        <!-- ШАГ 3 -->
+        <div id="step3" class="step">
+            <h2>Шаг 3 из 3</h2>
+            <div class="equation">(√1600 × 50) - √324 = ?</div>
+            <div class="input-group">
+                <input type="text" id="ans3" placeholder="Введи число" />
+                <br />
+                <button onclick="checkStep3()">Проверить</button>
+                <div class="error-msg" id="err3"></div>
+            </div>
+            <div id="stathamBlock" class="hidden" style="margin-top:20px;">
+                <p style="color:#ffd700; font-size:20px;">
+                    А теперь самое сложное.<br />
+                    Напиши что-нибудь, чтобы увидеть финал.<br />
+                    <span style="font-size:16px; color:#aaa;">Неважно что, это всё равно будет ошибкой</span>
+                </p>
+                <input type="text" id="finalInput" placeholder="Введи что угодно..." />
+                <br />
+                <button onclick="checkFinal()">Показать финал</button>
+                <div class="error-msg" id="errFinal"></div>
+            </div>
+            <div id="stathamImg" class="hidden image-container">
+                <img src="images/statham.jpg" alt="Джейсон Стетхем" />
+                <div style="margin-top:15px; color:#ffd700; font-size:24px; font-weight:bold;">
+                    Одна ошибка - и ты ошибся
+                </div>
+                <div class="final-message">
+                    Поздравляю!<br />
+                    Ты прошёл все испытания, даже ошибся — и это круто!<br />
+                    Твоя дочь
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ШАГ 1
+        function checkStep1() {
+            const ans = document.getElementById('ans1').value.trim();
+            const err = document.getElementById('err1');
+            if (ans === '17') {
+                document.getElementById('terminatorPhrase').classList.remove('hidden');
+                err.textContent = '';
+            } else {
+                err.textContent = 'Неверно, попробуй ещё раз.';
+            }
+        }
+
+        function checkPhrase1() {
+            const phrase = document.getElementById('phrase1').value.trim().toLowerCase();
+            const err = document.getElementById('err1p');
+            if (phrase === "i'll be back" || phrase === "ill be back") {
+                document.getElementById('terminatorImg').classList.remove('hidden');
+                err.textContent = '';
+            } else {
+                err.textContent = 'Не та фраза. Попробуй ещё раз.';
+            }
+        }
+
+        function goToStep2() {
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+        }
+
+        // ШАГ 2
+        function checkStep2() {
+            const ans = document.getElementById('ans2').value.trim();
+            const err = document.getElementById('err2');
+            if (ans === '4') {
+                document.getElementById('vaderPhrase').classList.remove('hidden');
+                err.textContent = '';
+            } else {
+                err.textContent = 'Неверно, попробуй ещё раз.';
+            }
+        }
+
+        function checkPhrase2() {
+            const phrase = document.getElementById('phrase2').value.trim().toLowerCase();
+            const err = document.getElementById('err2p');
+            if (phrase === "i am your father") {
+                document.getElementById('vaderImg').classList.remove('hidden');
+                err.textContent = '';
+            } else {
+                err.textContent = 'Не та фраза. Попробуй ещё раз.';
+            }
+        }
+
+        function goToStep3() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
+        }
+
+        // ШАГ 3
+        function checkStep3() {
+            const ans = document.getElementById('ans3').value.trim();
+            const err = document.getElementById('err3');
+            if (ans === '1982') {
+                document.getElementById('stathamBlock').classList.remove('hidden');
+                err.textContent = '';
+            } else {
+                err.textContent = 'Неверно, попробуй ещё раз.';
+            }
+        }
+
+        function checkFinal() {
+            const input = document.getElementById('finalInput').value.trim();
+            const err = document.getElementById('errFinal');
+            if (input.length > 0) {
+                document.getElementById('stathamImg').classList.remove('hidden');
+                err.textContent = '';
+                document.getElementById('stathamBlock').style.display = 'none';
+            } else {
+                err.textContent = 'Напиши хоть что-нибудь!';
+            }
+        }
+    </script>
+</body>
+</html>
